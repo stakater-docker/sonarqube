@@ -20,6 +20,9 @@ USER 10001
 # Http port
 EXPOSE 9000
 
+# Comma separated list of Plugin URLS to install 
+ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
+
 RUN set -x \
     # pub   2048R/D26468DE 2015-05-25
     #       Key fingerprint = F118 2E81 C792 9289 21DB  CAB4 CFCA 4A29 D264 68DE
@@ -35,6 +38,15 @@ RUN set -x \
     && rm sonarqube.zip* \
     && rm -rf $SONARQUBE_HOME/bin/*
 
+# Install plugins
+RUN mkdir -p ${SONARQUBE_HOME}/extensions/plugins \
+    && cd ${SONARQUBE_HOME}/extensions/plugins \
+    && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
+       for plugin_url in "${pluginUrlList[@]}" \
+       do \
+         wget "${plugin_url}" \
+       done
+        
 VOLUME "$SONARQUBE_HOME/data"
 
 WORKDIR $SONARQUBE_HOME
