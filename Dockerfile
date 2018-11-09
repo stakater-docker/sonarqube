@@ -1,7 +1,7 @@
 FROM stakater/java-centos:7-1.8
 
 ENV SONAR_VERSION=7.1 \
-    SONARQUBE_HOME=/opt/sonarqube \
+    SONARQUBE_HOME=/opt/app/sonarqube \
     # Database configuration
     # Defaults to using H2
     SONARQUBE_JDBC_USERNAME=sonar \
@@ -24,7 +24,6 @@ RUN set -x \
     && gpg --batch --verify sonarqube.zip.asc sonarqube.zip \
     && unzip sonarqube.zip \
     && mv sonarqube-$SONAR_VERSION sonarqube \
-    && chown -R sonarqube:sonarqube sonarqube \
     && rm sonarqube.zip* \
     && rm -rf $SONARQUBE_HOME/bin/*
 
