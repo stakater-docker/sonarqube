@@ -7,6 +7,15 @@ ENV SONAR_VERSION=7.1 \
     SONARQUBE_JDBC_USERNAME=sonar \
     SONARQUBE_JDBC_PASSWORD=sonar \
     SONARQUBE_JDBC_URL=
+    
+# Change to user root to install jdk, cant install it with any other user
+USER root 
+RUN yum update -y && \
+    yum install -y unzip && \
+    yum clean all
+
+# Again using non-root user i.e. stakater as set in base image
+USER 10001
 
 # Http port
 EXPOSE 9000
