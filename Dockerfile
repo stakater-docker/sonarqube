@@ -8,6 +8,9 @@ ENV SONAR_VERSION=7.1 \
     SONARQUBE_JDBC_PASSWORD=sonar \
     SONARQUBE_JDBC_URL=
     
+# Comma separated list of Plugin URLS to install 
+ENV PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
+
 # Change to user root to install jdk, cant install it with any other user
 USER root 
 RUN yum update -y && \
@@ -16,12 +19,6 @@ RUN yum update -y && \
 
 # Again using non-root user i.e. stakater as set in base image
 USER 10001
-
-# Http port
-EXPOSE 9000
-
-# Comma separated list of Plugin URLS to install 
-ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
 
 RUN set -x \
     # pub   2048R/D26468DE 2015-05-25
@@ -38,16 +35,10 @@ RUN set -x \
     && rm sonarqube.zip* \
     && rm -rf $SONARQUBE_HOME/bin/*
 
-# Install plugins
-RUN mkdir -p ${SONARQUBE_HOME}/extensions/plugins \
-    && cd ${SONARQUBE_HOME}/extensions/plugins \
-    && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
-       for plugin_url in "${pluginUrlList[@]}" \
-       do \
-         wget "${plugin_url}" \
-       done
-        
 VOLUME "$SONARQUBE_HOME/data"
+
+# Http port
+EXPOSE 9000
 
 WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/

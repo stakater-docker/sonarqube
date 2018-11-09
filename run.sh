@@ -6,6 +6,16 @@ if [ "${1:0:1}" != '-' ]; then
   exec "$@"
 fi
 
+
+# Install plugins
+pushd ${SONARQUBE_HOME}/extensions/plugins
+IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS"
+for plugin_url in "${pluginUrlList[@]}"
+do 
+    wget "${plugin_url}"
+done
+popd
+
 exec java -jar lib/sonar-application-$SONAR_VERSION.jar \
   -Dsonar.log.console=true \
   -Dsonar.jdbc.username="$SONARQUBE_JDBC_USERNAME" \
