@@ -38,7 +38,7 @@ RUN set -x \
 RUN mkdir -p ${HOME}/downloads/plugins \
     && cd ${HOME}/downloads/plugins \
     && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
-    && for plugin_url in "${pluginUrlList[@]}" \
+    && for plugin_url in "${pluginUrlList[@]}"; \
        do \
          wget "${plugin_url}" \
        done
