@@ -9,7 +9,7 @@ ENV SONAR_VERSION=7.1 \
     SONARQUBE_JDBC_URL=
     
 # Comma separated list of Plugin URLS to install 
-ENV PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
+ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
 
 # Change to user root to install jdk, cant install it with any other user
 USER root 
@@ -34,6 +34,15 @@ RUN set -x \
     && mv sonarqube-$SONAR_VERSION sonarqube \
     && rm sonarqube.zip* \
     && rm -rf $SONARQUBE_HOME/bin/*
+
+# Download plugins from list 
+RUN mkdir -p ${HOME}/downloads/plugins \
+    && cd ${HOME}/downloads/plugins \
+    && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
+       for plugin_url in "${pluginUrlList[@]}" \
+       do \
+         wget "${plugin_url}" \
+       done
 
 VOLUME "$SONARQUBE_HOME/data"
 
