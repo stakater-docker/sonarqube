@@ -13,8 +13,7 @@ ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v
 
 # Change to user root to install jdk, cant install it with any other user
 USER root 
-RUN yum update -y && \
-    yum install -y unzip && \
+RUN yum install -y unzip && \
     yum clean all
 
 # Again using non-root user i.e. stakater as set in base image
@@ -39,7 +38,7 @@ RUN set -x \
 RUN mkdir -p ${HOME}/downloads/plugins \
     && cd ${HOME}/downloads/plugins \
     && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
-       for plugin_url in "${pluginUrlList[@]}" \
+    && for plugin_url in "${pluginUrlList[@]}" \
        do \
          wget "${plugin_url}" \
        done
