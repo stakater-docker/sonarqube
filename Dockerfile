@@ -40,7 +40,7 @@ RUN mkdir -p ${HOME}/downloads/plugins \
     && IFS=, read -ra pluginUrlList <<< "$PLUGIN_URLS" \
     && for plugin_url in "${pluginUrlList[@]}"; \
        do \
-         wget "${plugin_url}" \
+         wget "${plugin_url}"; \
        done
 
 VOLUME "$SONARQUBE_HOME/data"
