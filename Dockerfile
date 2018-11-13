@@ -42,7 +42,7 @@ RUN mkdir -p ${HOME}/downloads/plugins \
        done
 
 RUN chown -R 10001 $SONARQUBE_HOME \
-      && chwon -R 10001 ${HOME}/downloads/
+      && chown -R 10001 ${HOME}/downloads/
 
 # Again using non-root user i.e. stakater as set in base image
 USER 10001
