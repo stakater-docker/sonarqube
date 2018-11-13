@@ -14,7 +14,8 @@ mv ${HOME}/downloads/plugins/* ${SONARQUBE_HOME}/extensions/plugins
 if [ -f /opt/app/tmp/conf/sonar.properties ];
 then
   echo "moving properties"
-  mv /opt/app/tmp/conf/sonar.properties ${SONARQUBE_HOME}/conf/
+  rm -f ${SONARQUBE_HOME}/conf/sonar.properties
+  cp /opt/app/tmp/conf/sonar.properties ${SONARQUBE_HOME}/conf/
 fi
 
 exec java -jar lib/sonar-application-$SONAR_VERSION.jar \
