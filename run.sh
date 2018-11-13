@@ -16,5 +16,4 @@ exec java -jar lib/sonar-application-$SONAR_VERSION.jar \
   -Dsonar.jdbc.password="$SONARQUBE_JDBC_PASSWORD" \
   -Dsonar.jdbc.url="$SONARQUBE_JDBC_URL" \
   -Dsonar.web.javaAdditionalOpts="$SONARQUBE_WEB_JVM_OPTS -Djava.security.egd=file:/dev/./urandom" \
-  -Dsonar.auth.oidc.clientId.secured="Test" \
   "$@"
