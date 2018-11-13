@@ -10,12 +10,11 @@ fi
 # Install plugins from download dir
 mv ${HOME}/downloads/plugins/* ${SONARQUBE_HOME}/extensions/plugins
 
-# WIP
-if [ -f /opt/app/tmp/conf/sonar.properties ];
+# Move conf from temp mount path to conf location
+if [ -f ${CONF_MOUNT_PATH} ];
 then
-  echo "moving properties"
   rm -f ${SONARQUBE_HOME}/conf/sonar.properties
-  cp /opt/app/tmp/conf/sonar.properties ${SONARQUBE_HOME}/conf/
+  mv ${CONF_MOUNT_PATH} ${SONARQUBE_HOME}/conf/
 fi
 
 exec java -jar lib/sonar-application-$SONAR_VERSION.jar \

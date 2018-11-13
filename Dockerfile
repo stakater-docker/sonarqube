@@ -6,7 +6,8 @@ ENV SONAR_VERSION=7.1 \
     # Defaults to using H2
     SONARQUBE_JDBC_USERNAME=sonar \
     SONARQUBE_JDBC_PASSWORD=sonar \
-    SONARQUBE_JDBC_URL=
+    SONARQUBE_JDBC_URL=  \
+    CONF_MOUNT_PATH="/opt/app/tmp/conf/sonar.properties"
     
 # Comma separated list of Plugin URLS to install 
 ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
@@ -15,7 +16,6 @@ ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v
 USER root 
 RUN yum install -y unzip && \
     yum clean all
-
 
 RUN set -x \
     # pub   2048R/D26468DE 2015-05-25
@@ -46,6 +46,7 @@ RUN chown -R 10001 $SONARQUBE_HOME \
 
 # Again using non-root user i.e. stakater as set in base image
 USER 10001
+
 # Http port
 EXPOSE 9000
 
