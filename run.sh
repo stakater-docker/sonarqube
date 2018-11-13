@@ -6,7 +6,6 @@ if [ "${1:0:1}" != '-' ]; then
   exec "$@"
 fi
 
-
 # Install plugins from download dir
 mv ${HOME}/downloads/plugins/* ${SONARQUBE_HOME}/extensions/plugins
 
