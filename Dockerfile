@@ -43,8 +43,6 @@ RUN mkdir -p ${HOME}/downloads/plugins \
          wget "${plugin_url}"; \
        done
 
-VOLUME "$SONARQUBE_HOME/data"
-
 # Http port
 EXPOSE 9000
 
