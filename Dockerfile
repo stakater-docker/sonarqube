@@ -16,8 +16,6 @@ USER root
 RUN yum install -y unzip && \
     yum clean all
 
-# Again using non-root user i.e. stakater as set in base image
-USER 10001
 
 RUN set -x \
     # pub   2048R/D26468DE 2015-05-25
@@ -43,6 +41,10 @@ RUN mkdir -p ${HOME}/downloads/plugins \
          wget "${plugin_url}"; \
        done
 
+RUN chown -R 10001 $SONARQUBE_HOME
+
+# Again using non-root user i.e. stakater as set in base image
+USER 10001
 # Http port
 EXPOSE 9000
 
