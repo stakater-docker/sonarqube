@@ -5,6 +5,7 @@ Docker Image for SonarQube with required plugins installed.
 
 ## Plugins
 - OpenID Connect (https://github.com/vaulttec/sonar-auth-oidc)
+- Sonar Build Breaker (https://github.com/SonarQubeCommunity/sonar-build-breaker)
 
 ## Mounting config file
 Mount config files to `/opt/app/tmp/conf/` instead of the actual `${SONARQUBE_HOME}/conf` location in order to preserve the user's (10001) ownership.

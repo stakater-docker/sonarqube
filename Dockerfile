@@ -10,7 +10,7 @@ ENV SONAR_VERSION=7.1 \
     CONF_MOUNT_PATH="/opt/app/tmp/conf/sonar.properties"
     
 # Comma separated list of Plugin URLS to install 
-ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar"
+ARG PLUGIN_URLS="https://github.com/vaulttec/sonar-auth-oidc/releases/download/v1.0.4/sonar-auth-oidc-plugin-1.0.4.jar,https://github.com/SonarQubeCommunity/sonar-build-breaker/releases/download/2.2/sonar-build-breaker-plugin-2.2.jar"
 
 # Change to user root to install jdk, cant install it with any other user
 USER root 
