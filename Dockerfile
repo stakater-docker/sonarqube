@@ -41,6 +41,9 @@ RUN mkdir -p ${HOME}/downloads/plugins \
          wget "${plugin_url}"; \
        done
 
+# Add Plugins as jar files
+ADD plugins/* ${HOME}/downloads/plugins/
+
 RUN chown -R 10001 $SONARQUBE_HOME \
       && chown -R 10001 ${HOME}/downloads/
 
