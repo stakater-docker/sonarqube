@@ -6,10 +6,6 @@ if [ "${1:0:1}" != '-' ]; then
   exec "$@"
 fi
 
-whoami | true
-pwd
-ls -la
-
 # Create extensions directories to enable usage after volume mounting
 mkdir -p ${SONARQUBE_HOME}/extensions/plugins ${SONARQUBE_HOME}/extensions/jdbc-driver 
 
