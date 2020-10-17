@@ -1,28 +1,28 @@
 #!/bin/bash
 
+set -x
 set -e
+
+## If the mounted data volume is empty, populate it from the default data
+cp -a /opt/sonarqube/data-init/* /opt/sonarqube/data/
+
+## Link the plugins directory from the mounted volume
+rm -rf /opt/sonarqube/extensions/plugins
+ln -s /opt/sonarqube/data/plugins /opt/sonarqube/extensions/plugins
+
+mkdir -p /opt/sonarqube/data/plugins
+for I in $(ls /opt/sonarqube/extensions-init/plugins/*.jar);
+do
+  TARGET_PATH=$(echo ${I} | sed 's@extensions-init/plugins@data/plugins@g')
+  if ! [[ -e ${TARGET_PATH} ]]; then
+    cp ${I} ${TARGET_PATH}
+  fi
+done
 
 if [ "${1:0:1}" != '-' ]; then
   exec "$@"
 fi
 
-# Create extensions directories to enable usage after volume mounting
-mkdir -p ${SONARQUBE_HOME}/extensions/plugins ${SONARQUBE_HOME}/extensions/jdbc-driver 
-
-# Install plugins from download dir
-mv ${HOME}/downloads/plugins/* ${SONARQUBE_HOME}/extensions/plugins
-
-# Move conf from temp mount path to conf location
-if [ -f ${CONF_MOUNT_PATH} ];
-then
-  rm -f ${SONARQUBE_HOME}/conf/sonar.properties
-  mv ${CONF_MOUNT_PATH} ${SONARQUBE_HOME}/conf/
-fi
-
-exec java -jar lib/sonar-application-$SONAR_VERSION.jar \
-  -Dsonar.log.console=true \
-  -Dsonar.jdbc.username="$SONARQUBE_JDBC_USERNAME" \
-  -Dsonar.jdbc.password="$SONARQUBE_JDBC_PASSWORD" \
-  -Dsonar.jdbc.url="$SONARQUBE_JDBC_URL" \
-  -Dsonar.web.javaAdditionalOpts="$SONARQUBE_WEB_JVM_OPTS -Djava.security.egd=file:/dev/./urandom" \
-  "$@"
+java -jar lib/sonar-application-$SONAR_VERSION.jar \
+    -Dsonar.web.javaAdditionalOpts="${SONARQUBE_WEB_JVM_OPTS} -Djava.security.egd=file:/dev/./urandom" \
+    "$@"
