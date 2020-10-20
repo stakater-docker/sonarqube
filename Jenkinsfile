@@ -3,5 +3,5 @@
 
 pushDockerImage {
     dockerRepositoryURL = "docker.io"
-    imagePrefix = "7.9.1-community-jdk11.0.5-debian10-v1.0.0"
+    imagePrefix = "7.9.1-community-jdk11.0.5-debian10"
 }
