@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
-@Library('github.com/stakater/fabric8-pipeline-library@v2.9.4') _
+@Library('github.com/stakater/stakater-pipeline-library@v2.16.35') _
 
 pushDockerImage {
-    dockerRegistryURL = "docker.io"
-    imagePrefix = "7.1-jdk1.8-centos7"
+    dockerRepositoryURL = "docker.io"
+    imagePrefix = "7.9.1-community-jdk11.0.5-debian10"
 }
