@@ -1,5 +1,7 @@
 FROM docker.io/sonarqube:8.9.2-community
 
+RUN update-ca-certificates
+
 ENV CUSTOM_PLUGINS_DIR=/opt/sonarqube/extensions/plugins
 
 ADD https://github.com/rht-labs/sonar-auth-openshift/releases/download/v1.2.0/sonar-auth-openshift-plugin.jar ${CUSTOM_PLUGINS_DIR}
