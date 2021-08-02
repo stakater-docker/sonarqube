@@ -57,7 +57,15 @@ jobs:
           org.opencontainers.image.source=${{ github.event.repository.clone_url }}
           org.opencontainers.image.created=${{ steps.prep.outputs.created }}
           org.opencontainers.image.revision=${{ github.sha }}
-      
+
+    - name: Push Latest Tag
+      uses: anothrNick/github-tag-action@1.26.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        RELEASE_BRANCHES: main
+        DEFAULT_BUMP: patch
+
     - name: Notify Failure
       if: failure()
       uses: mshick/add-pr-comment@v1
