@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  SONAR_VERSION: 8.97
       
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
       id: generate_tag
       run: |
         sha=${{ github.event.pull_request.head.sha }}
-        tag="SNAPSHOT-PR-${{ github.event.pull_request.number }}-${sha:0:8}"
+        tag="SNAPSHOT-PR-${{ env.SONAR_VERSION }}"
         echo "##[set-output name=GIT_TAG;]$(echo ${tag})"
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
