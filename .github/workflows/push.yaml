@@ -27,10 +27,11 @@ jobs:
 
     - name: Generate Tag
       id: generate_tag
-      uses: anothrNick/github-tag-action@1.26.0
+      uses: anothrNick/github-tag-action@1.36.0
       env:
         GITHUB_TOKEN: ${{ secrets.STAKATER_GITHUB_TOKEN }}
         WITH_V: true
+        CUSTOM_TAG: $${{ env.SONARQUBE_VERSION }}
         RELEASE_BRANCHES: master
         DEFAULT_BUMP: patch
         DRY_RUN: true
