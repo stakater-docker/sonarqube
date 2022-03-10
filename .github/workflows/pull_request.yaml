@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  SONARQUBE_VERSION: 8.9.7
       
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
       id: generate_tag
       run: |
         sha=${{ github.event.pull_request.head.sha }}
-        tag="SNAPSHOT-PR-${{ github.event.pull_request.number }}-${sha:0:8}"
+        tag="SNAPSHOT-PR-${{ env.SONARQUBE_VERSION }}-${{ github.event.pull_request.number }}-${sha:0:8}"
         echo "##[set-output name=GIT_TAG;]$(echo ${tag})"
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -44,7 +47,8 @@ jobs:
         file: ${{ env.DOCKER_FILE_PATH  }}
         pull: true
         push: true
-        build-args: BUILD_PARAMETERS=${{ env.BUILD_PARAMETERS }}
+        build-args: |
+          SONARQUBE_VERSION=${{ env.SONARQUBE_VERSION }}
         cache-to: type=inline
         tags: |
           ${{ env.IMAGE_REPOSITORY }}:${{ steps.generate_tag.outputs.GIT_TAG }}

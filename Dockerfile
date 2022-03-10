@@ -1,4 +1,5 @@
-FROM docker.io/sonarqube:8.9.7-community
+ARG SONARQUBE_VERSION 
+FROM docker.io/sonarqube:${SONARQUBE_VERSION}
 
 ENV CUSTOM_PLUGINS_DIR=/opt/sonarqube/extensions/plugins
 
