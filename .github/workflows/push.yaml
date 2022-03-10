@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  SONARQUBE_VERSION: 8.9.7
+  SONARQUBE_VERSION: 8.9.7-community
 
 jobs:
   build:
@@ -54,6 +54,7 @@ jobs:
         push: true
         build-args: |
           SONARQUBE_VERSION=${{ env.SONARQUBE_VERSION }}
+          BUILD_PARAMETERS=${{ env.BUILD_PARAMETERS }}
         cache-to: type=inline
         tags: |
           ${{ env.IMAGE_REPOSITORY }}:${{ steps.generate_tag.outputs.new_tag }}
