@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  SONARQUBE_VERSION: 8.9.7
+  SONARQUBE_VERSION: 8.9.7-community
       
 jobs:
   build:
