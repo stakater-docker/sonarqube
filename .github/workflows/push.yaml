@@ -31,7 +31,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.STAKATER_GITHUB_TOKEN }}
         WITH_V: true
-        CUSTOM_TAG: ${{ env.SONARQUBE_VERSION }}
         RELEASE_BRANCHES: master
         DEFAULT_BUMP: patch
         DRY_RUN: true
